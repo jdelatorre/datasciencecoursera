@@ -41,3 +41,18 @@ weightmedian <- function(directory, day) {
         median(dat_subset[, "Weight"], na.rm = TRUE)
         
 }
+
+corr <- function(directory, threshold = 0) {
+
+        files_list <- list.files(directory, full.names = TRUE)
+        obs <- vector()
+        for (i in 1:332) {
+
+                if(sum(complete.cases(read.csv(files_list[i]))) > threshold) {
+                        dat <- read.csv(files_list[i]) 
+                        dat2 <- cor(dat[,2],dat[,3], "complete.obs")
+                        obs <- c(obs, dat2)
+                } 
+        }
+        return(as.vector(obs))
+}
